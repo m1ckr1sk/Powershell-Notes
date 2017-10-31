@@ -22,11 +22,11 @@
   Process {
     Write-Verbose "Getting newest $Newest $log event log entries from $ComputerName"
     Try {
-      Write-Host "$($ComputerName.ToUpper())" -ForegroundColor Green
+      Write-Output "$($ComputerName.ToUpper())" -ForegroundColor Green
       $logs=Get-EventLog -LogName $log -Newest $Newest -Computer $ComputerName -ErrorAction Stop
       if ($logs) {
         Write-Verbose "Sorting $($logs.count) entries"
-        $logs | sort Source | foreach {
+        $logs | Sort-Object Source | ForEach-Object {
           $logfile=Join-Path -Path $logpath -ChildPath "$ComputerName-$($_.Source).txt"
           $_ | Format-List TimeWritten,MachineName,EventID,EntryType,Message | Out-File -FilePath $logfile -append
         }
@@ -44,7 +44,7 @@
   } 
   
   End {
-    dir $logpath
+    Get-ChildItem $logpath
     Write-Verbose "Finished export event source function"
   }
 } 
