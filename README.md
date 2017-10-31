@@ -92,6 +92,7 @@
   Get-A-UsefulThing -myParamter hello
   ```
   However, once a change has been made, remember to re dot source your source file otherwise changes will not show up.
+* Cmdletbinding() allows the function to run as a cmdlet.
 
 ## Hash table
 * key value pair set objects
