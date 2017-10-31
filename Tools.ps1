@@ -83,45 +83,106 @@ function Get-ServicesHash{
     $services
 }
 
+
 function Get-MachineData{
+    <#
+    .SYNOPSIS
+    Retrieves key system version and model information from one to ten computers.
+
+    .DESCRIPTION
+    Get-MachineData uses Common Information Model (CIM)  to access information 
+    from one to ten computers by name or IP address.
+
+    .PARAMETER computerNames
+    One or more computer names or IP address up to a maximum of 10.
+
+    .PARAMETER errorLog
+    When used with -logErrors, can be used to specify the location of the error log.
+
+    .PARAMETER logErrors
+    Specify this switch to create a text file error log at the location specificed in -errorLog.
+
+    .EXAMPLE
+    Get-MachineData -ComputerNames 'localhost', 'WIN2012JHN' -LogErrors -ErrorLog "c:\temp\errorlog.txt
+
+    .EXAMPLE
+    Get-Content "hostnames.txt" | Get-MachineData
+    #>
     [CmdletBinding()]
+
     Param(
-        [string[]]$computerNames = 'localhost',
+        [parameter(Mandatory=$True,
+                   ValueFromPipeline=$True,
+                   HelpMessage="Computer name or IP address")]
+        [validateCount(1,10)]
+        [ValidateNotNullOrEmpty()]
+        [Alias('hostnames')]
+        [string[]]$computerNames,
         [string]$errorLog = 'C:\Errors.txt',
-        [string]$logLevel = 'Error'
+        [switch]$logErrors
     )
     # Begin runs once for each object sent to the fucntion
-    BEGIN{}
+    BEGIN{
+        Write-Verbose "Error log will be $errorLog"
+    }
 
     # Process runs for each object sent to the fucntion
     PROCESS{
-      Write-Output $computerNames
-      Write-Output $errorLog
+      Write-Verbose "Running machine information retreival on $computerNames"
+
       foreach($computerName in $computerNames){
-        $osInfo = Get-OSInfo -computerName $computerName
-        $compInfo = Get-ComputerInfo -computerName $computerName
-        $biosInfo = Get-BIOSInfo -computerName $computerName
-        $diskInfo = Get-DiskInfo -computerName $computerName
-        $serviceInfo = Get-ServiceInfo -computerName $computerName
+        try{
+          $computerInfoSuccess = $true
+          
+          Write-Verbose "interrogating operating system information for $computerName ..."
+          $osInfo = Get-OSInfo -computerName $computerName
+
+          Write-Verbose "interrogating BIOS information for $computerName ..."
+          $biosInfo = Get-BIOSInfo -computerName $computerName
+
+          Write-Verbose "interrogating disk information for $computerName ..."
+          $diskInfo = Get-DiskInfo -computerName $computerName
+
+          Write-Verbose "interrogating running services information for $computerName ..."
+          $serviceInfo = Get-ServiceInfo -computerName $computerName
+
+          Write-Verbose "interrogating computer information for $computerName ..."
+          $compInfo = Get-ComputerInfo -computerName $computerName
+
+          Write-Verbose "All interrogations complete for $computerName ..."
+        }
+        catch{
+          $msg = "Failed to get machine information for $computerName, $($_.Exception.message)"
+          $computerInfoSuccess = $false
+          Write-Warning $msg
+          if($logErrors){
+              $msg | Out-File $errorLog -Append
+              Write-Warning "Written to error log $errorLog"
+          }
+        }
+
+        if($computerInfoSuccess){
         
-        $disksHash = Get-DisksHash -diskInfo $diskInfo
-        $servicesHash = Get-ServicesHash -serviceInfo $serviceInfo
-        $adminPasswordStatusText = Get-AdminPasswordStatusText -adminPasswordStatusNumber $compInfo.adminpasswordstatus  
+            $disksHash = Get-DisksHash -diskInfo $diskInfo
+            $servicesHash = Get-ServicesHash -serviceInfo $serviceInfo
+            $adminPasswordStatusText = Get-AdminPasswordStatusText -adminPasswordStatusNumber $compInfo.adminpasswordstatus  
         
                    
-        $props = @{'ComputerName'=$computerName; `
-                   'OSVersion'=$osInfo.version; `
-                   'SPVersion'=$osInfo.servicepackmajorversion; `
-                   'BIOSSerial'=$biosInfo.serialnumber; `
-                   'Manufacturer'=$compInfo.manufacturer; `
-                   'Model'=$compInfo.model; `  
-				   'AdminPasswordStatus'=$adminPasswordStatusText; `  
-                   'Disks' = $disksHash; `
-                   'RunningServices' = $servicesHash;}
+            $props = @{'ComputerName'=$computerName; `
+                       'OSVersion'=$osInfo.version; `
+                       'LastBootUpTime'=$osInfo.LastBootUpTime; `
+                       'SPVersion'=$osInfo.servicepackmajorversion; `
+                       'BIOSSerial'=$biosInfo.serialnumber; `
+                       'Manufacturer'=$compInfo.manufacturer; `
+                       'Model'=$compInfo.model; `
+				       'AdminPasswordStatus'=$adminPasswordStatusText; `
+                       'Disks' = $disksHash; `
+                       'RunningServices' = $servicesHash;}
 
-        $computerObj = New-Object -TypeName PSObject -Property $props
+            $computerObj = New-Object -TypeName PSObject -Property $props
 
-        Write-Output $computerObj
+            Write-Output $computerObj
+         }
       }
     }
 
@@ -129,4 +190,8 @@ function Get-MachineData{
     END{}
 }
 
-Get-MachineData -computerName 'localhost' -errorLog 'C:\Users\MButt\Source\powershell-training\errorlog.txt'
+#Get-MachineData -computerName 'localhost' -errorLog 'C:\Users\MButt\Source\powershell-training\errorlog.txt' -Verbose
+#Get-MachineData -computerName '' -errorLog 'C:\Users\MButt\Source\powershell-training\errorlog.txt' -Verbose
+#'localhost' | Get-MachineData
+#'localhost','localhost' | Get-MachineData
+Get-MachineData -computerName 'NO MACHINE', 'localhost','NOTONLINE' -errorLog 'C:\Users\MButt\Source\powershell-training\errorlog.txt' -LogErrors -Verbose

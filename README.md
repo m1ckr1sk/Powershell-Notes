@@ -13,6 +13,7 @@
   ```
   $freespace / 1gb
   ```
+* In Powershell ISE you can use snippets in Edit->Start Snippets to provide template.
 
 ## Help  
 * get-help - show help e.g. get-help get-service
@@ -82,8 +83,8 @@
 * Enable -psremoting allows machine to be remotely managed.  Need to be admin.
 
 ## Scripts
-* use the back tick to escape carriage return and allow multi-line statements
-* use <# for opening a multi line comment and #> to close multi line comment.
+* Use the back tick to escape carriage return and allow multi-line statements
+* Use <# for opening a multi line comment and #> to close multi line comment.
 * Formatting scripts is not enforced in powershell but very important for readability.
 * Use dot sourcing to load scripts containing functions into the session.  These can then be run into powershell.
   ```
@@ -93,16 +94,50 @@
   ```
   However, once a change has been made, remember to re dot source your source file otherwise changes will not show up.
 * Cmdletbinding() allows the function to run as a cmdlet.
+* Use write-verbose and write-debug to allow print statements that can provide levels of logging.
+* Use ValueFromPipeline to allow function to take input from pipeline, e.g. 
+  ```
+  'localhost' | Get-A-UsefulThing
+  ```
+* Use comment help to provide information to help function
+  ```
+  <#
+    .SYNOPSIS
+    Retrieves key system version and model information from one to ten computers.
+
+    .DESCRIPTION
+    Get-MachineData uses Common Information Model (CIM)  to access information 
+    from one to ten computers by name or IP address.
+
+    .PARAMETER computerNames
+    One or more computer names or IP address up to a maximum of 10.
+
+    .PARAMETER errorLog
+    When used with -logErrors, can be used to specify the location of the error log.
+
+    .PARAMETER logErrors
+    Specify this switch to create a text file error log at the location specificed in -errorLog.
+
+    .EXAMPLE
+    Get-MachineData -ComputerNames 'localhost', 'WIN2012JHN' -LogErrors -ErrorLog "c:\temp\errorlog.txt
+
+    .EXAMPLE
+    Get-Content "hostnames.txt" | Get-MachineData
+    #>
+  ```
+*  ErrorActionPreference defines what action powershell takes on error.  Default is continue.
+
+
 
 ## Hash table
-* key value pair set objects
+* Key value pair set objects
   ``` 
   $person = @{Name='mike';Age='21';Friends={'Steve','Brian'}}
   Write-Host $person.Name
   ```
   
 ## Write to file
-* use write-content or add-content
+* Use write-content or add-content
 
 ## Function template
 Good function template
