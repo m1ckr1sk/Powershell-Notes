@@ -36,8 +36,9 @@ Usually controlled by group policy
   ```
 
 ## Comparison operators
+
 | operator | notes |
---------------------
+| ---------| ----------- |
 | -eg      | equal     |
 | -ne      | not equal |
 | -like    | like |
