@@ -2,7 +2,7 @@
   [cmdletbinding()]
   Param (
     [Parameter(Position=0,Mandatory=$True,Helpmessage="Enter a computername",ValueFromPipeline=$True)]
-    [string]$computerName,
+    [string]$ComputerName,
     [Parameter(Position=1,Mandatory=$True,Helpmessage="Enter a classic event log name like System")]
     [string]$Log,
     [int]$Newest=100
@@ -20,14 +20,14 @@
   } 
   
   Process {
-    Write-Verbose "Getting newest $newest $log event log entries from $computername"
+    Write-Verbose "Getting newest $Newest $log event log entries from $ComputerName"
     Try {
-      Write-Host "$($computername.ToUpper())" -ForegroundColor Green
-      $logs=Get-EventLog -LogName $log -Newest $Newest -Computer $computername -ErrorAction Stop
+      Write-Host "$($ComputerName.ToUpper())" -ForegroundColor Green
+      $logs=Get-EventLog -LogName $log -Newest $Newest -Computer $ComputerName -ErrorAction Stop
       if ($logs) {
         Write-Verbose "Sorting $($logs.count) entries"
         $logs | sort Source | foreach {
-          $logfile=Join-Path -Path $logpath -ChildPath "$computername-$($_.Source).txt"
+          $logfile=Join-Path -Path $logpath -ChildPath "$ComputerName-$($_.Source).txt"
           $_ | Format-List TimeWritten,MachineName,EventID,EntryType,Message | Out-File -FilePath $logfile -append
         }
 
@@ -35,7 +35,7 @@
         Remove-Variable -Name logs,logfile
       } 
       else {
-        Write-Warning "No logged events found for $log on $computerName"
+        Write-Warning "No logged events found for $log on $ComputerName"
       } 
     } 
     Catch { 
