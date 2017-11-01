@@ -154,18 +154,9 @@
   * Memory
   * Binary
   * Script
-  * Manifest
+  * Manifest 
 * Use Get-PSDrive to list locations available to powershell.
-  Using:
-  ```
-  cd ENV:\
-  ```
-  will get to the environment variables space so issuing
-  ```
-  Get-ChildItem
-  ```
-  in this environment will list environment variables.
-  
+
   | Name  | Provider | Root |
   |-------|----------|------|                        
   |A             | FileSystem  |  A:\                  | 
@@ -179,6 +170,31 @@
   |HKLM          | Registry    |  HKEY_LOCAL_MACHINE   | 
   |Variable      | Variable    |                       | 
   |WSMan         | WSMan       |                       | 
+  
+  Using:
+  ```
+  cd ENV:\
+  ```
+  will get to the environment variables space so issuing
+  ```
+  Get-ChildItem
+  ```
+  in this environment will list environment variables.
+* Use 
+  ```
+  Import-Module <module name> 
+  ```
+  to import a module and make its functions available to powershell.
+* Use  
+  ```
+  New-ModuleManifest -Path <path to manifest file output>
+  ```
+  to create a manifest for the module.  Manifest files use extension .psd1.
+* Use
+  ```
+  Remove-Module <module name>
+  ```
+  to remove the module from the machine.
 
 
 ## Hash table
