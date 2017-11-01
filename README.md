@@ -147,6 +147,14 @@
   Get-Service | Format-List
   Get-Service | Format-Table
   ```
+  
+
+## Using other methods to access objects
+* COM objects
+* .NET objects
+* WSH Shell
+* WMI
+* CIM
 
 ## Modules
 * Use Get-Module to list loaded modules.  Use -ListAvailable to show all installed on the machine.
@@ -203,6 +211,9 @@
   $person = @{Name='mike';Age='21';Friends={'Steve','Brian'}}
   Write-Host $person.Name
   ```
+  
+## Filter Functions
+* Can be used to as functions to filter the data returned from another pipeline
   
 ## Write to file
 * Use write-content or add-content
