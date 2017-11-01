@@ -9,6 +9,9 @@
 * two commands on same line use ; (not recommended)
 * single quotes recommended unless embedding variable in another string
 * Use sensible naming convention to avoid clashing e.g. if a function is created possibly pre fix with company name for example.
+  ```
+  Get-MikeSoft-OSInfo
+  ```
 * Can use gb, tb and mb to represent gigabyte, terrabyte and megabyte e.g.
   ```
   $freespace / 1gb
