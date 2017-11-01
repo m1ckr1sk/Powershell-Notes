@@ -16,4 +16,4 @@ Receive-Job -Name DemoJob
 
 Get-Job -Name DemoJob | Remove-Job
 
-Get-ScheduledJob | Unregister-ScheduledJob
+Get-ScheduledJob -Name DemoJob | Unregister-ScheduledJob
