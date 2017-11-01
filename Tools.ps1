@@ -40,13 +40,6 @@ function Get-ServiceInfo{
                     -Filter "State='Running'"
 }
 
-function Get-DotNetInfo{
-    Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -recurse |
-    Get-ItemProperty -name Version,Release -EA 0 |
-    Where { $_.PSChildName -match '^(?!S)\p{L}'} |
-    Select PSChildName, Version, Release
-}
-
 function Get-AdminPasswordStatusText{
     Param(
         [string]$adminPasswordStatusNumber
@@ -156,9 +149,6 @@ function Get-MachineData{
           Write-Verbose "interrogating computer information for $computerName ..."
           $compInfo = Get-ComputerInfo -computerName $computerName
 
-          Write-Verbose "interrogating dotnet information for $computerName ..."
-          $dotnetInfo = Get-DotNetInfo
-
           Write-Verbose "All interrogations complete for $computerName ..."
         }
         catch{
@@ -187,8 +177,7 @@ function Get-MachineData{
                        'Model'=$compInfo.model; `
 				       'AdminPasswordStatus'=$adminPasswordStatusText; `
                        'Disks' = $disksHash; `
-                       'RunningServices' = $servicesHash; `
-                       'DotNet Versions' = $dotnetInfo;}
+                       'RunningServices' = $servicesHash;}
 
             $computerObj = New-Object -TypeName PSObject -Property $props
 

@@ -32,6 +32,10 @@
   ```
   $PSVersionTable
   ```
+* To get the powershell install directory
+  ```
+  $PSHome
+  ```
 * [Lazy Win Admin](http://www.lazywinadmin.com/p/lazywinadmin-04.html)
 * [Unofficial coding standards](https://github.com/PoshCode/PowerShellPracticeAndStyle)
 
@@ -134,8 +138,47 @@
     Get-Content "hostnames.txt" | Get-MachineData
     #>
   ```
-*  ErrorActionPreference defines what action powershell takes on error.  Default is continue.
+* ErrorActionPreference defines what action powershell takes on error.  Default is continue.
 
+## Formatting output
+* Views are used to output to the screen in different formats
+  ``` 
+  Get-Service | Format-Wide
+  Get-Service | Format-List
+  Get-Service | Format-Table
+  ```
+
+## Modules
+* Use Get-Module to list loaded modules.  Use -ListAvailable to show all installed on the machine.
+* Four differnt types
+  * Memory
+  * Binary
+  * Script
+  * Manifest
+* Use Get-PSDrive to list locations available to powershell.
+  Using:
+  ```
+  cd ENV:\
+  ```
+  will get to the environment variables space so issuing
+  ```
+  Get-ChildItem
+  ```
+  in this environment will list environment variables.
+  
+  | Name  | Provider | Root |
+  |-------|----------|------|                        
+  |A             | FileSystem  |  A:\                  | 
+  |Alias         | Alias       |                       | 
+  |C             | FileSystem  |  C:\                  | 
+  |Cert          | Certificate |  \                    | 
+  |D             | FileSystem  |  D:\                  | 
+  |Env           | Environment |                       | 
+  |Function      | Function    |                       | 
+  |HKCU          | Registry    |  HKEY_CURRENT_USER    | 
+  |HKLM          | Registry    |  HKEY_LOCAL_MACHINE   | 
+  |Variable      | Variable    |                       | 
+  |WSMan         | WSMan       |                       | 
 
 
 ## Hash table
