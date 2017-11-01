@@ -323,6 +323,10 @@ function Get-MachineData{
   ```
   to create an XML file for the job.  You can create the scheduled job in the GUI and export to XML if this is easier.
   
+## Code signing
+* Code can be signed using a certificate from a code signing server.
+* Microsoft recommend execution policy should be all-signed
+  
   
 
 
