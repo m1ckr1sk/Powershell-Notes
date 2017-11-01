@@ -21,6 +21,7 @@
   ```
   Invoke-ScriptAnalyzer -Path <path to script file>
   ```
+* Use Start-Transcript to record all commands and output for further reference.  Use Stop-Transcript to stop recording.
 
 ## Help  
 * Get-Help - show help e.g. get-help get-service
