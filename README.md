@@ -1,13 +1,13 @@
 # Powershell 
 
 ## Tips
-* ctrl shift enter - run as administrator
-* use out grid format for nice view
+* Ctrl shift enter - run as administrator
+* Use out grid format for nice view
   ```
   command | ogv e.g. get-service | ogv
   ```
-* two commands on same line use ; (not recommended)
-* single quotes recommended unless embedding variable in another string
+* Two commands on same line use ; (not recommended)
+* Single quotes recommended unless embedding variable in another string
 * Use sensible naming convention to avoid clashing e.g. if a function is created possibly pre fix with company name for example.
   ```
   Get-MikeSoft-OSInfo
@@ -19,8 +19,8 @@
 * In Powershell ISE you can use snippets in Edit->Start Snippets to provide template.
 
 ## Help  
-* get-help - show help e.g. get-help get-service
-* get-help get-eventlog -examples - gets examples of a command.
+* Get-Help - show help e.g. get-help get-service
+* Get-Help get-eventlog -examples - gets examples of a command.
 * [The scripting guy](https://blogs.technet.microsoft.com/heyscriptingguy/)
 * [More lunches](https://morelunches.com/2012/12/01/learn-powershell-toolmaking-in-a-month-of-lunches/)
 * To get the version of powershell
@@ -30,9 +30,9 @@
 * [Lazy Win Admin](http://www.lazywinadmin.com/p/lazywinadmin-04.html)
 
 ## Alias  
-* get-alias - lists all the aliases availbale e.g. cd -> Set-Location
-* new -create but not overwrite, set -create and overwrite 
-* aliases are generally session scoped unless you use a profile to add them to each session
+* Get-Alias - lists all the aliases availbale e.g. cd -> Set-Location
+* New -create but not overwrite, set -create and overwrite 
+* Aliases are generally session scoped unless you use a profile to add them to each session
 
 ## Execution policy
 * Usually controlled by group policy
@@ -44,16 +44,16 @@
 
 ## Variables and objects
 * Always start with $
-* objects can be inspected using get-Member.  e.g. $browser | get-member
+* Objects can be inspected using get-Member.  e.g. $browser | get-member
 * Arrays are continuous or cyclical so last element can be indexed using -1
-* use parenthesis to force execution order, e.g.
+* Use parenthesis to force execution order, e.g.
   ```
   $service = (get-service)[0].name
   ```
 
 ## Comparison operators
 
-| operator | notes |
+| Operator | Notes |
 | ---------| ----------- |
 | -eg      | equal     |
 | -ne      | not equal |
@@ -80,9 +80,9 @@
   }
   ```
 
-## CMI
-* new version of wmi
-* requires wsman - workstation management. Microsoft version is rmman.
+## CIM - Common Information Model
+* New version of wmi - Windows Management Instrumentation
+* Requires wsman - workstation management. Microsoft version is rmman.
 * Enable -psremoting allows machine to be remotely managed.  Need to be admin.
 
 ## Scripts
