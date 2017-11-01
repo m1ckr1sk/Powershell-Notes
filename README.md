@@ -254,20 +254,24 @@ function Get-MachineData{
   Enter-PSSession -ComputerName name
   ``` 
   to enter a remote PS session on the given computer name.
+  
+  Use
   ```
   Exit-PSSession 
   ```
   to leave the session.
+  
   Use 
   ```
   New-PSession -ComputerName
   ``` 
-  returns a reference to the session but does not automatically enter it.
+  to return a reference to the session but does not automatically enter it.
+  
 * Using 
   ```
   Invoke-command 
   ```
-  can send a specific command to one or more remote machines.
+  can send a specific command to one or more remote machines.  For example, 
   ```
   Invoke-Command 
     -ScriptBlock { 
@@ -277,5 +281,49 @@ function Get-MachineData{
 	-ComputerName machine1
 	-ArgumentList 'EventLog'
   ```
+* $Using will allow local scoped variables to be used in invoke command on remote machine.
+
+## Background and Scheduled Jobs
+### Background jobs
+* Three types  
+  * Local - Start-Job -ScriptBlock {Dir}
+  * Remoting - Invoke-Command -ScriptBlock {DIR} -AsJob
+  * CMMI -AsJob
+* Can have parent and child jobs  
+* Use Get-Job to get reference to job using ID or name
+* Stop-Job and Remove-Job to clear up
+* Wait-Job - wait for job to return
+* Recieve-job receives the results from the job. Receiving a parent will receive all children too.
+
+### Scheduled jobs
+* Exact same functionality of task scheduler GUI in windows
+* Consists of
+  * Action
+  * Principal 
+  * Triggers
+  * Options
+* Use 
+  ```
+  Get-Command -Module PSScheduledJob
+  ```
+  to show all scheduled jobs.
+* Use 
+  ```
+  New-ScheduledJobOption
+  ```
+  to create new job option object
+* Use
+  ```
+  New-JobTrigger
+  ```
+  to create new job trigger
+* Use
+  ```
+  Register-ScheduledJobOption
+  ```
+  to create an XML file for the job.  You can create the scheduled job in the GUI and export to XML if this is easier.
+  
+  
+
 
 
