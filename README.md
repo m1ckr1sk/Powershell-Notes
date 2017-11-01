@@ -32,7 +32,7 @@
   $PSVersionTable
   ```
 * [Lazy Win Admin](http://www.lazywinadmin.com/p/lazywinadmin-04.html)
-* [Unofficial coding standards] (https://github.com/PoshCode/PowerShellPracticeAndStyle)
+* [Unofficial coding standards](https://github.com/PoshCode/PowerShellPracticeAndStyle)
 
 ## Alias  
 * Get-Alias - lists all the aliases availbale e.g. cd -> Set-Location
