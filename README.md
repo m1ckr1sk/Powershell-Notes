@@ -236,6 +236,38 @@ function Get-MachineData{
     END{}
 }
 ```
-  
+
+## Profiles
+* Can be used to set up common settings.  Similar to .bashr or .profile in bash.
+
+## Remote powershell
+* Use 
+  ```
+  Enter-PSSession -ComputerName name
+  ``` 
+  to enter a remote PS session on the given computer name.
+  ```
+  Exit-PSSession 
+  ```
+  to leave the session.
+  Use 
+  ```
+  New-PSession -ComputerName
+  ``` 
+  returns a reference to the session but does not automatically enter it.
+* Using 
+  ```
+  Invoke-command 
+  ```
+  can send a specific command to one or more remote machines.
+  ```
+  Invoke-Command 
+    -ScriptBlock { 
+      Param($service) 
+	  Get-Service $service
+	  }
+	-ComputerName machine1
+	-ArgumentList 'EventLog'
+  ```
 
 
