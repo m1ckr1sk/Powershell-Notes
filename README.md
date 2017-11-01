@@ -32,12 +32,12 @@
 * aliases are generally session scoped unless you use a profile to add them to each session
 
 ## Execution policy
-*  Usually controlled by group policy
-  *  Restricted - safest
-  *  Remote signed - trust stuff on this box
-  *  All signed
-  *  Unrestricted
-*  Can be set at user level
+* Usually controlled by group policy
+  * Restricted - safest
+  * Remote signed - trust stuff on this box
+  * All signed
+  * Unrestricted
+* Can be set at user level
 
 ## Variables and objects
 * Always start with $
