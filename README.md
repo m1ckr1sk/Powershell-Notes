@@ -238,7 +238,15 @@ function Get-MachineData{
 ```
 
 ## Profiles
-* Can be used to set up common settings.  Similar to .bashr or .profile in bash.
+* Can be used to set up common settings.  Similar to .bashr or .profile in bash.  For example, create
+  a file called **Profile.ps1** in my documents and copy in the code below to add alias commands for git.
+  ```
+  Function Get-GitStatus { git status }
+  Function Get-GitPull {git pull}
+
+  Set-Alias status Get-GitStatus -Description "Get the current status of the git repo at the current location"
+  Set-Alias pull Get-GitPull -Description "Pulls the git repo at the current location"
+  ```
 
 ## Remote powershell
 * Use 
