@@ -17,6 +17,10 @@
   $freespace / 1gb
   ```
 * In Powershell ISE you can use snippets in Edit->Start Snippets to provide template.
+* Use Script analyser for static analysis
+  ```
+  Invoke-ScriptAnalyzer -Path <path to script file>
+  ```
 
 ## Help  
 * Get-Help - show help e.g. get-help get-service
